@@ -13,6 +13,13 @@
     <div id="app">
         <p>{{description}}</p>
         <h1>{{product}}</h1>
+        <div class="product-image">
+            <img v-bind:src="image" :alt="product">
+        </div>
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Out of Stock</p>
+        <p v-if="inventory > 10">In Stock</p>
+        <p v-else>Out of Stock</p>
     </div>
     <script>
         // 应用挂载
