@@ -8,18 +8,86 @@
     <link rel="stylesheet" href="./styles.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="./main.js"></script>
+    <style>
+        ul li img{
+            width: 180px;
+            height: 100px;
+            margin: 0px auto;
+        }
+        ul li{
+            float: left;
+            /* display: block; */
+        }
+        ul li div a{
+            /* margin-right: 0px auto; */
+            /* font-size: 10px; */
+            position:absolute;
+            right: 0;
+            bottom: 0;
+            float: right;
+            /* text-align: right; */
+            /* float: right; */
+        }
+        ul li p{
+            font-size: 20px;
+            color: gray;
+            /* float: left; */
+        }
+        ul li p:nth-child(3){
+            color: black;
+        }
+        ul li div{
+            position: relative;
+            margin-right: 8px;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+        ul li div span{
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <p>{{description}}</p>
-        <h1>{{product}}</h1>
-        <div class="product-image">
-            <img v-bind:src="image" :alt="product">
+        <div class="nav-bar">
+            <div class="product-display">
+                <div class="product-container">
+                    <div class="product-image">
+                        <img v-bind:src="image" :alt="product">
+                    </div>
+                    <div class="product-info">
+                        <p>{{description}}</p>
+                        <h1>{{product}}</h1>
+                        <p v-if="inStock">In Stock</p>
+                        <p v-else>Out of Stock</p>
+                        <p v-if="inventory > 10">In Stock</p>
+                        <p v-else>Out of Stock</p>
+
+                        <!-- 按钮的禁用和启用 -->
+                        <button v-if="show" disabled="show">按钮</button>
+                        <div v-for="detail in details" :key="detail.id">
+                            <p>{{detail.name}}</p>
+                            <img :src="detail.url">
+                            <p v-if="detail.flag">In Stock</p>
+                        </div>
+
+                        <div>
+                            <ul>
+                                <li v-for="item in classes" :key="item.id">
+                                    <div>
+                                        <img :src="item.url">
+                                        <p>教师名称:{{item.teacherName}}&nbsp;&nbsp;<span v-if="!item.flag">课程结束</span></p>
+                                        <p>{{item.courseName}}</p>
+                                        <p>{{item.className}}</p>
+                                        <a href="#" v-if="item.flag">进入</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p v-if="inStock">In Stock</p>
-        <p v-else>Out of Stock</p>
-        <p v-if="inventory > 10">In Stock</p>
-        <p v-else>Out of Stock</p>
     </div>
     <script>
         // 应用挂载
